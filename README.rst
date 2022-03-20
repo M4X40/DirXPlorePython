@@ -33,9 +33,9 @@ Main Menu
 
 This is the initial page you are sent to after the installation process. It should look a little something like:
 
->>> Current Directory: C:\Users\dirxp
+>>> Current Directory: C:/Users/dirxp
 >>>
->>> [0]   >>   Move Up (C:\Users)
+>>> [0]   >>   Move Up (C:/Users)
 >>> [1]   >>   View Contents
 >>> [2]   >>   Type Directory
 
