@@ -49,7 +49,7 @@ This is used to move up in the directory you are currently in (e.g. C:\Users\Dir
 [1] View Contents
 -----------------
 
-This lets you view the Files/Subfolders of the Current Directory. These are indexed in order by name, descending. More information is in :ref:`Content Viewing`
+This lets you view the Files/Subfolders of the Current Directory. These are indexed in order by name, descending. More information is in ``Content Viewing``
 
 [2] Type Directory
 ------------------
