@@ -19,7 +19,7 @@ This currently is **WINDOWS ONLY**, with some plans for a MacOS version later.
 Installation
 ============
 
-Installation is very simple, just download the script from [releases], and run the script.
+Installation is very simple, just download the script from ``Releases``, and run the script.
 All required modules will automagically install themselves, as well as updating pip. (For the nerds, this is done using subprocess)
  - The modules that are downloaded include:
     - TermColor
