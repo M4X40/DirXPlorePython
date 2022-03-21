@@ -4,7 +4,7 @@ DirXPlore
 Python Directory and File managment at your keystrokes.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Script Version:    1.0.1
+:Script Version:    1.1.0
 :Python Version:    3.10.2
 :Main Page:         https://github.com/M4X40/DirXPlore
 :Documentation:     https://github.com/M4X40/DirXPlore#readme
@@ -72,6 +72,25 @@ All items have a ``Index Number``, which looks like this:
 You can select an item by typing its Index Number. If the item is a folder, it will switch your directory to said folder, otherwise, the file selected will be open with the default program on your machine.
 
 ``Note: typing an index outside of the given range will result in an error, but not cause any harm to the script or the directory. The script handles IndexErrors itself so there is no hassle.``
+
+File Information System
+-----------------------
+
+This is a new feature in release 1.1.0. The File Information System (F.I.S) is a system in which you are given information about a user-selected file.
+This information can include File Name, Size, Extension, Creation Date, and Modification Date.
+
+The F.I.S will look something like this:
+
+>>>       File Info for: DirXPlore.py
+>>> ________________________________________
+>>> Name         |        DirXPlore
+>>> Extension    |        .py
+>>> Size         |        6.970703125 MB
+>>> Created      |        1647743941.8419933
+>>> Modified     |        1647836592.4208443
+>>> ________________________________________
+
+``Note: The Created and Modified numbers will have offical date/time info soon.``
 
 Future Plans
 ============
