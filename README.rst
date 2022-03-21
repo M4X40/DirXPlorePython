@@ -44,7 +44,7 @@ Lets go over what each of these does, shall we?
 [0] Move Up
 -----------
 
-This is used to move up in the directory you are currently in (e.g. C:\Users\DirXP > C:\Users).
+This is used to move up in the directory you are currently in (e.g. C:/Users/DirXP > C:/Users).
 
 [1] View Contents
 -----------------
