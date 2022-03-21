@@ -4,7 +4,8 @@ DirXPlore
 Python Directory and File managment at your keystrokes.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Version:           1.0.1
+:Script Version:    1.0.1
+:Python Version:    3.10.2
 :Main Page:         https://github.com/M4X40/DirXPlore
 :Documentation:     https://github.com/M4X40/DirXPlore#readme
 :Author:            Max S. <maxst.marie11@gmail.com>
