@@ -103,5 +103,5 @@ These future plans are in my reach, just need the motivation to get there:
  - Quick Access, like Windows
  - Tabs, or as close as i can get
  - Built-In console/IPY Window
-
+ - File Similarity View, check if 2 or more files are similar or check if a string is in other files.
 
