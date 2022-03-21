@@ -32,13 +32,13 @@ If you want to disable the module download for whatever reason, Line **5** is yo
 Main Menu
 =========
 
-This is the initial page you are sent to after the installation process. It should look a little something like:
+This is the initial page you are sent to after the installation process. It should look a little something like::
 
->>> Current Directory: C:/Users/dirxp
->>>
->>> [0]   >>   Move Up (C:/Users)
->>> [1]   >>   View Contents
->>> [2]   >>   Type Directory
+    Current Directory: C:\Users\dirxp
+    
+    [0]   >>   Move Up (C:\Users)
+    [1]   >>   View Contents
+    [2]   >>   Type Directory
 
 Lets go over what each of these does, shall we?
 
@@ -79,16 +79,16 @@ File Information System
 This is a new feature in release 1.1.0. The File Information System (F.I.S) is a system in which you are given information about a user-selected file.
 This information can include File Name, Size, Extension, Creation Date, and Modification Date.
 
-The F.I.S will look something like this:
+The F.I.S will look something like this::
 
->>>       File Info for: DirXPlore.py
->>> ________________________________________
->>> Name         |        DirXPlore
->>> Extension    |        .py
->>> Size         |        6.970703125 MB
->>> Created      |        1647743941.8419933
->>> Modified     |        1647836592.4208443
->>> ________________________________________
+          File Info for: DirXPlore.py
+    ________________________________________
+    Name         |        DirXPlore
+    Extension    |        .py
+    Size         |        6.970703125 MB
+    Created      |        1647743941.8419933
+    Modified     |        1647836592.4208443
+    ________________________________________
 
 ``Note: The Created and Modified numbers will have offical date/time info soon.``
 
