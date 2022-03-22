@@ -4,7 +4,7 @@ DirXPlore
 Python Directory and File managment at your keystrokes.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:Script Version:    1.1.0
+:Script Version:    1.1.5
 :Python Version:    3.10.2
 :Main Page:         https://github.com/M4X40/DirXPlore
 :Documentation:     https://github.com/M4X40/DirXPlore#readme
@@ -91,6 +91,14 @@ The F.I.S will look something like this::
     ________________________________________
 
 ``Note: The Created and Modified numbers will have offical date/time info soon.``
+
+Extraction
+----------
+
+This is new to 1.1.5, where if the file you are viewing (using the `F.I.S.`) is either a `.zip`, `.rar`, `.7z` or a `.gz`, you get a new [2] option. Selecting this will extract the contents of the zipped folder and give you progress updates as you go.
+
+Trying to use [2] on a non-zipped file will give you an error::
+ERROR: Not a Zipped File: C:\Users\dirxp\Documents\NewText.txt
 
 Future Plans
 ============
