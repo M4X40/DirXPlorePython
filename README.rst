@@ -104,7 +104,7 @@ These future plans are in my reach, just need the motivation to get there:
  - [X] Tabs, or as close as i can get
  - [X] Built-In console/IPY Window
  - [X] File Similarity View, check if 2 or more files are similar or check if a string is in other files.
- ``[X] > Not Working On It``
- ``[-] > Being Worked On``
- ``[+] > Done and Implemented``
+ ``[X] Not Working On It``
+ ``[-] Being Worked On``
+ ``[+] Done and Implemented``
 
