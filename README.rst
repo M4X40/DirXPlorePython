@@ -97,8 +97,9 @@ Extraction
 
 This is new to 1.1.5, where if the file you are viewing (using the `F.I.S.`) is either a `.zip`, `.rar`, `.7z` or a `.gz`, you get a new [2] option. Selecting this will extract the contents of the zipped folder and give you progress updates as you go.
 
-Trying to use [2] on a non-zipped file will give you an error::
-ERROR: Not a Zipped File: C:\Users\dirxp\Documents\NewText.txt
+Trying to use [2] on a non-zipped file will give you an error like this::
+
+    ERROR: Not a Zipped File: C:\Users\dirxp\Documents\NewText.txt
 
 Future Plans
 ============
