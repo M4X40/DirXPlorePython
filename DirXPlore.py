@@ -6,6 +6,12 @@ skipModuleInstall = False
     # If "True", this skips the module install (see the required modules section)                                        | Recommended Option: False
 
 ################
+##   Module  ###
+################
+
+from tkinter import *
+
+################
 ##   Signal   ##
 ################
 
@@ -57,6 +63,8 @@ def main():
     from unipath import Path
     from prompt_toolkit import prompt
     import zipfile
+    from tkinter import messagebox
+    from tkinter import filedialog
 
     # Clear Console
     cls()
@@ -226,6 +234,34 @@ def main():
         if itemext == ".zip" or itemext == ".gz" or itemext == ".rar" or itemext == ".7z":
             print(colored(f'[{colored2}]  >>  Un-Zip File'))
             itemiszip = True
+        else:
+            itemiszip = False
+        # Txt Check/Print
+        formatstable = [
+            ".txt",
+            ".json",
+            ".py",
+            ".md",
+            ".rtf",
+            ".html",
+            ".css",
+            ".lua",
+            ".js",
+            ".c",
+            ".cs",
+            ".sh",
+            ".bat",
+            ".r",
+            ".org,"
+            ".doc",
+            ".docx",
+            ".log"
+        ]
+        if itemext in formatstable:
+            print(colored(f'[{colored2}]  >>  Edit Text File'))
+            itemistxt = True
+        else:
+            itemistxt = False
 
         #Prompt
         while True:
@@ -236,14 +272,13 @@ def main():
                 viewContents()
             elif text == "1":
                 os.system("start " + itemname)
-                viewContents(False)
+                viewContents()
             elif text == "2" and itemiszip:
                 unzip(itempath, selection, list)
+            elif text == "2" and itemistxt:
+                editTxT(selection, list)
             else:
-                if text == "2":
-                    print(colored(f'ERROR: Not a Zipped File:', 'red'), colored(f'{text}', 'magenta'))
-                else:
-                    print(colored(f'ERROR: Unknown Index:', 'red'), colored(f'{text}', 'magenta'))
+                print(colored(f'ERROR: Unknown Index:', 'red'), colored(f'{text}', 'magenta'))
 
     def unzip(path, selection, list):
         with zipfile.ZipFile(path, 'r') as zip_ref:
@@ -251,8 +286,170 @@ def main():
         cls()
         print(colored("Done!", 'yellow'))
         fileinfo(selection, list)
+    
+    def editTxT(selection, list):
+        itemname = str(list[selection])
+        itempath = Path(f'{Path.cwd()}\{itemname}')
 
+        # Class
+        class TextEditor:
 
+            # Constructor
+            def __init__(self,root):
+                self.root = root
+                self.root.title("DirXPlore Text Editor | V1.2.0")
+                self.root.geometry("1200x700+200+150")
+                self.filename = None
+                self.title = StringVar()
+                self.status = StringVar()
+
+                # Titlebar
+                self.titlebar = Label(self.root,textvariable=self.title,font=("Ubuntu",15,"bold"),bd=2,relief=GROOVE)
+                self.titlebar.pack(side=TOP,fill=BOTH)
+                self.settitle()
+                self.titlebar.configure(bg='#202020')
+                self.titlebar.configure(fg='#ffffff')
+
+                # Statusbar
+                self.statusbar = Label(self.root,textvariable=self.status,font=("times new roman",15,"bold"),bd=2,relief=GROOVE)
+                self.statusbar.pack(side=BOTTOM,fill=BOTH)
+                self.status.set("DirXPlore | Made by M4X4")
+                self.statusbar.configure(bg='#1f1f1f')
+                self.statusbar.configure(fg='#ffffff')
+    
+                # Menubar
+                self.menubar = Menu(self.root,font=("Ubuntu",15,"bold"),activebackground="skyblue")
+                self.menubar.configure(bg='#202020')
+                self.menubar.configure(fg='#ffffff')
+                self.root.config(menu=self.menubar)
+
+                # FileMenu
+                self.filemenu = Menu(self.menubar,font=("Ubuntu",12,"bold"),activebackground="skyblue",tearoff=0)
+                self.filemenu.add_command(label="Save",accelerator="Ctrl+S",command=self.savefile)
+                self.filemenu.add_separator()
+                self.filemenu.add_command(label="Exit",accelerator="Ctrl+E",command=self.exit)
+                self.filemenu.configure(bg='#2c2c2c')
+                self.filemenu.configure(fg='#ffffff')
+                self.menubar.add_cascade(label="File", menu=self.filemenu)
+
+                # EditMenu
+                self.editmenu = Menu(self.menubar,font=("Ubuntu",12,"bold"),activebackground="skyblue",tearoff=0)
+                self.editmenu.add_command(label="Cut",accelerator="Ctrl+X",command=self.cut)
+                self.editmenu.add_command(label="Copy",accelerator="Ctrl+C",command=self.copy)
+                self.editmenu.add_command(label="Paste",accelerator="Ctrl+V",command=self.paste)
+                self.editmenu.add_separator()
+                self.editmenu.add_command(label="Undo",accelerator="Ctrl+Z",command=self.undo)
+                self.editmenu.configure(bg='#2c2c2c')
+                self.editmenu.configure(fg='#ffffff')
+                self.menubar.add_cascade(label="Edit", menu=self.editmenu)
+
+                # HelpMenu
+                self.helpmenu = Menu(self.menubar,font=("Ubuntu",12,"bold"),activebackground="skyblue",tearoff=0)
+                self.helpmenu.add_command(label="About",command=self.infoabout)
+                self.helpmenu.configure(bg='#2c2c2c')
+                self.helpmenu.configure(fg='#ffffff')
+                self.menubar.add_cascade(label="Help", menu=self.helpmenu)
+
+                # Scrollbar
+                scrol_y = Scrollbar(self.root,orient=VERTICAL)
+                self.txtarea = Text(self.root,yscrollcommand=scrol_y.set,font=("Ubuntu",15,"bold"),state="normal",relief=GROOVE)
+                scrol_y.pack(side=RIGHT,fill=Y)
+                scrol_y.config(command=self.txtarea.yview)
+                self.txtarea.pack(fill=BOTH,expand=1)
+
+                # Shortcuts
+                self.shortcuts()
+
+            # SetTitle
+            def settitle(self):
+                if self.filename:
+                    self.title.set(self.filename)
+                else:
+                    self.title.set(f"{itemname}")
+
+            # SaveFile
+            def savefile(self,*args):
+                try:
+                    data = self.txtarea.get("1.0",END)
+                    outfile = open(itemname,"w")
+                    outfile.write(data)
+                    outfile.close()
+                    self.settitle()
+                    self.status.set("Saved Successfully")
+                except Exception as e:
+                    messagebox.showerror("Exception",e)
+                    print(e)
+
+            # Exit
+            def exit(self,*args):
+                op = messagebox.askyesno("WARNING","Your Unsaved Data May be Lost!!")
+                if op>0:
+                    self.root.destroy()
+                else:
+                    return
+
+            # Cut
+            def cut(self,*args):
+                self.txtarea.event_generate("<<Cut>>")
+
+            # Copy
+            def copy(self,*args):
+                    self.txtarea.event_generate("<<Copy>>")
+
+            # Paste
+            def paste(self,*args):
+                self.txtarea.event_generate("<<Paste>>")
+
+            # Undo
+            def undo(self,*args):
+                try:
+                    if self.filename:
+                        self.txtarea.delete("1.0",END)
+                        infile = open(self.filename,"r")
+                        for line in infile:
+                            self.txtarea.insert(END,line)
+                        infile.close()
+                        self.settitle()
+                        self.status.set("Undone Successfully")
+                    else:
+                        self.txtarea.delete("1.0",END)
+                        self.filename = None
+                        self.settitle()
+                        self.status.set("Undone Successfully")
+                except Exception as e:
+                    messagebox.showerror("Exception",e)
+
+            # About
+            def infoabout(self):
+                messagebox.showinfo("About DirXPlore TE","A Text Editor for DirXPlore\nCreated by M4X4.")
+
+            # Shortcuts
+            def shortcuts(self):
+                self.txtarea.bind("<Control-s>",self.savefile)
+                self.txtarea.bind("<Control-e>",self.exit)
+                self.txtarea.bind("<Control-x>",self.cut)
+                self.txtarea.bind("<Control-c>",self.copy)
+                self.txtarea.bind("<Control-v>",self.paste)
+                self.txtarea.bind("<Control-z>",self.undo)
+            
+            # DarkMode bg
+                self.txtarea.configure(bg='#2c2c2c')
+                self.txtarea.configure(fg='#ffffff')
+
+            # OpenFile
+                infile = open(itemname,"r")
+                self.txtarea.delete("1.0",END)
+                for line in infile:
+                    self.txtarea.insert(END,line)
+                infile.close()
+                self.settitle()
+
+        # Tk
+        root = Tk()
+        # Root
+        TextEditor(root)
+        #Window Looping
+        root.mainloop()
 
     ###############
     ##   Start   ##
