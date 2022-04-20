@@ -32,39 +32,46 @@ def main():
 
     #######  Required Modules
     import subprocess
+    from subprocess import call
     import sys
+    import platform
 
     if skipModuleInstall == False:
-        print(' ')
-        print('Installing TermColor')
-        subprocess.check_call(
-            [sys.executable, '-m', 'pip', 'install', 'termcolor'])
+        if platform.system() == 'Windows':
+            print('\nInstalling TermColor')
+            call('pip install termcolor', shell=False)
 
-        print(' ')
-        print('Updating PiP')
-        subprocess.check_call(
-            [sys.executable, '-m', 'pip', 'install', '--upgrade', 'pip'])
+            print('\nUpdating PiP')
+            call('pip install --upgrade pip', shell=False)
 
-        print(' ')
-        print('Installing Unipath')
-        subprocess.check_call(
-            [sys.executable, '-m', 'pip', 'install', 'unipath'])
+            print('\nInstalling Unipath')
+            call('pip install unipath', shell=False)
 
-        print(' ')
-        print('Installing Prompt ToolKit')
-        subprocess.check_call(
-            [sys.executable, '-m', 'pip', 'install', 'prompt_toolkit'])
+            print('\nInstalling Prompt ToolKit')
+            call('pip install prompt_toolkit', shell=False)
+            cls()
+        else:
+            print('\nInstalling TermColor')
+            call('pip install termcolor', shell=True)
 
-        cls()
+            print('\nUpdating PiP')
+            call('pip install --upgrade pip', shell=True)
+
+            print('\nInstalling Unipath')
+            call('pip install unipath', shell=True)
+
+            print('\nInstalling Prompt ToolKit')
+            call('pip install prompt_toolkit', shell=True)
+            cls()
 
     ####### Other Modules
-    from os.path import exists
-    from termcolor import colored
-    from unipath import Path
-    from prompt_toolkit import prompt
-    import zipfile
-    from tkinter import messagebox
-    from tkinter import filedialog
+        from os.path import exists
+        from unipath import Path
+        from prompt_toolkit import prompt
+        import zipfile
+        from tkinter import messagebox
+        from tkinter import filedialog
+        from termcolor import colored
 
     # Clear Console
     cls()
@@ -72,6 +79,13 @@ def main():
     ##############
     ##   Main   ##
     ##############
+
+    def pause():
+        if platform.system() == 'Windows':
+            os.system("pause")
+        else:
+            os.system('read -s -n 1 -p "Press any key to continue...\n"')
+            cls()
 
     def SelectionPrompt(): # Main Menu
 
@@ -86,13 +100,15 @@ def main():
         coloredZero = (colored('[0]', 'magenta'))
         coloredOne = (colored('[1]', 'magenta'))
         coloredTwo = (colored('[2]', 'magenta'))
+        coloredTre = (colored('[3]', 'magenta'))
 
         # Prints
-        print(colored(f'Current Directory: {coloredPath}'))
-        print('')
+        print(colored(f'Current Directory: {coloredPath}\n'))
         print(colored(f'{coloredZero}   >>   Move Up ({coloredPathAbove})'))
         print(colored(f'{coloredOne}   >>   View Contents'))
         print(colored(f'{coloredTwo}   >>   Type Directory'))
+        print(colored(f'--=[ EXTRA OPTIONS ]=--'))
+        print(colored(f'{coloredTre}   >>   Console Here\n'))
 
         #Prompt
         while True:
@@ -103,12 +119,15 @@ def main():
                 cls()
                 Path.chdir(currentPath)
                 SelectionPrompt()
-            if text == "1":
+            elif text == "1":
                 cls()
                 viewContents()
-            if text == "2":
+            elif text == "2":
                 cls()
                 changeDirPrompt()
+            elif text == "3":
+                cls()
+                console(currentPath)
 
     def viewContents(): # Contents List
 
@@ -218,6 +237,7 @@ def main():
         colored0 = (colored('0', 'magenta'))
         colored1 = (colored('1', 'magenta'))
         colored2 = (colored('2', 'magenta'))
+        colored3 = (colored('3', 'magenta'))
 
         #Prints
         print(colored(f'          File Info for:', 'cyan'), colored(f'{itemname}', 'magenta'))
@@ -230,12 +250,22 @@ def main():
         print('----------------------------------------')
         print(colored(f'[{colored0}]  >>  Go Back'))
         print(colored(f'[{colored1}]  >>  Open File'))
+
         # Zip Check/Print
-        if itemext == ".zip" or itemext == ".gz" or itemext == ".rar" or itemext == ".7z":
+        formatstable = [
+            ".zip",
+            ".gz",
+            ".rar",
+            ".7z",
+            ".grit"
+            ".wim"
+        ]
+        if itemext in formatstable:
             print(colored(f'[{colored2}]  >>  Un-Zip File'))
             itemiszip = True
         else:
             itemiszip = False
+
         # Txt Check/Print
         formatstable = [
             ".txt",
@@ -263,6 +293,13 @@ def main():
         else:
             itemistxt = False
 
+        # Python Check
+        if itemext == ".py":
+            print(colored(f'[{colored3}]  >>  Run File Here'))
+            itemispy = True
+        else:
+            itemispy = False
+
         #Prompt
         while True:
             text = prompt('Option # >> ')
@@ -277,6 +314,9 @@ def main():
                 unzip(itempath, selection, list)
             elif text == "2" and itemistxt:
                 editTxT(selection, list)
+            elif text == "3" and itemispy:
+                runpy(selection, list)
+                print()
             else:
                 print(colored(f'ERROR: Unknown Index:', 'red'), colored(f'{text}', 'magenta'))
 
@@ -289,7 +329,6 @@ def main():
     
     def editTxT(selection, list):
         itemname = str(list[selection])
-        itempath = Path(f'{Path.cwd()}\{itemname}')
 
         # Class
         class TextEditor:
@@ -311,20 +350,20 @@ def main():
                 self.titlebar.configure(fg='#ffffff')
 
                 # Statusbar
-                self.statusbar = Label(self.root,textvariable=self.status,font=("times new roman",15,"bold"),bd=2,relief=GROOVE)
+                self.statusbar = Label(self.root,textvariable=self.status,font=("times new roman",15),bd=2,relief=GROOVE)
                 self.statusbar.pack(side=BOTTOM,fill=BOTH)
                 self.status.set("DirXPlore | Made by M4X4")
                 self.statusbar.configure(bg='#1f1f1f')
                 self.statusbar.configure(fg='#ffffff')
-    
+
                 # Menubar
-                self.menubar = Menu(self.root,font=("Ubuntu",15,"bold"),activebackground="skyblue")
+                self.menubar = Menu(self.root,font=("Ubuntu",15),activebackground="skyblue")
                 self.menubar.configure(bg='#202020')
                 self.menubar.configure(fg='#ffffff')
                 self.root.config(menu=self.menubar)
 
                 # FileMenu
-                self.filemenu = Menu(self.menubar,font=("Ubuntu",12,"bold"),activebackground="skyblue",tearoff=0)
+                self.filemenu = Menu(self.menubar,font=("Ubuntu",12),activebackground="skyblue",tearoff=0)
                 self.filemenu.add_command(label="Save",accelerator="Ctrl+S",command=self.savefile)
                 self.filemenu.add_separator()
                 self.filemenu.add_command(label="Exit",accelerator="Ctrl+E",command=self.exit)
@@ -333,7 +372,7 @@ def main():
                 self.menubar.add_cascade(label="File", menu=self.filemenu)
 
                 # EditMenu
-                self.editmenu = Menu(self.menubar,font=("Ubuntu",12,"bold"),activebackground="skyblue",tearoff=0)
+                self.editmenu = Menu(self.menubar,font=("Ubuntu",12),activebackground="skyblue",tearoff=0)
                 self.editmenu.add_command(label="Cut",accelerator="Ctrl+X",command=self.cut)
                 self.editmenu.add_command(label="Copy",accelerator="Ctrl+C",command=self.copy)
                 self.editmenu.add_command(label="Paste",accelerator="Ctrl+V",command=self.paste)
@@ -344,7 +383,7 @@ def main():
                 self.menubar.add_cascade(label="Edit", menu=self.editmenu)
 
                 # HelpMenu
-                self.helpmenu = Menu(self.menubar,font=("Ubuntu",12,"bold"),activebackground="skyblue",tearoff=0)
+                self.helpmenu = Menu(self.menubar,font=("Ubuntu",12),activebackground="skyblue",tearoff=0)
                 self.helpmenu.add_command(label="About",command=self.infoabout)
                 self.helpmenu.configure(bg='#2c2c2c')
                 self.helpmenu.configure(fg='#ffffff')
@@ -352,7 +391,7 @@ def main():
 
                 # Scrollbar
                 scrol_y = Scrollbar(self.root,orient=VERTICAL)
-                self.txtarea = Text(self.root,yscrollcommand=scrol_y.set,font=("Ubuntu",15,"bold"),state="normal",relief=GROOVE)
+                self.txtarea = Text(self.root,yscrollcommand=scrol_y.set,font=("Ubuntu",15),state="normal",relief=GROOVE)
                 scrol_y.pack(side=RIGHT,fill=Y)
                 scrol_y.config(command=self.txtarea.yview)
                 self.txtarea.pack(fill=BOTH,expand=1)
@@ -431,7 +470,7 @@ def main():
                 self.txtarea.bind("<Control-c>",self.copy)
                 self.txtarea.bind("<Control-v>",self.paste)
                 self.txtarea.bind("<Control-z>",self.undo)
-            
+
             # DarkMode bg
                 self.txtarea.configure(bg='#2c2c2c')
                 self.txtarea.configure(fg='#ffffff')
@@ -450,6 +489,35 @@ def main():
         TextEditor(root)
         #Window Looping
         root.mainloop()
+
+    def runpy(selection, list):
+        cls()
+
+        itemname = str(list[selection])
+
+        exec(open(itemname).read())
+
+        print(colored(f'Script {itemname} has ended,', 'cyan'))
+        pause()
+        cls()
+        fileinfo(selection, list)
+
+    def console(path):
+        coloredExit = colored('exit', 'magenta')
+
+        print(f"DirXPlore [Version 1.3.0]\n(R) M4X4. All rights reserved.\n\nType {coloredExit} to exit\n")
+        
+        while True:
+            try:
+                script=prompt(f"{path}> ")
+
+                if script == "exit":
+                    cls()
+                    SelectionPrompt()
+                else:
+                    exec(script)
+            except Exception as e:
+                print(colored(f"\n{e}\n", 'red'))
 
     ###############
     ##   Start   ##
