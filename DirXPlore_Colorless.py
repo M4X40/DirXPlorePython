@@ -38,9 +38,6 @@ def main():
 
     if skipModuleInstall == False:
         if platform.system() == 'Windows':
-            print('\nInstalling TermColor')
-            call('pip install termcolor', shell=False)
-
             print('\nUpdating PiP')
             call('pip install --upgrade pip', shell=False)
 
@@ -71,7 +68,6 @@ def main():
         import zipfile
         from tkinter import messagebox
         from tkinter import filedialog
-        from termcolor import colored
 
     # Clear Console
     cls()
@@ -95,20 +91,14 @@ def main():
         pathAbove = currentPath.parent
 
         # Coloring
-        coloredPath = (colored(currentPath, 'cyan'))
-        coloredPathAbove = (colored(pathAbove, 'cyan'))
-        coloredZero = (colored('[0]', 'magenta'))
-        coloredOne = (colored('[1]', 'magenta'))
-        coloredTwo = (colored('[2]', 'magenta'))
-        coloredTre = (colored('[3]', 'magenta'))
 
         # Prints
-        print(colored(f'Current Directory: {coloredPath}\n'))
-        print(colored(f'{coloredZero}   >>   Move Up ({coloredPathAbove})'))
-        print(colored(f'{coloredOne}   >>   View Contents'))
-        print(colored(f'{coloredTwo}   >>   Type Directory'))
-        print(colored(f'--=[ EXTRA OPTIONS ]=--'))
-        print(colored(f'{coloredTre}   >>   Console Here\n'))
+        print(f'Current Directory: {currentPath}\n')
+        print(f'[0]   >>   Move Up ({pathAbove})')
+        print(f'[1]   >>   View Contents')
+        print(f'[2]   >>   Type Directory')
+        print(f'--=[ EXTRA OPTIONS ]=--')
+        print(f'[3]   >>   Console Here\n')
 
         #Prompt
         while True:
@@ -139,21 +129,19 @@ def main():
         try:
             itemslist = os.listdir()
         except PermissionError:
-            print(colored(f'ERROR: Invalid Permissions to read:', 'red'), colored(f'{Path(os.getcwd())}', 'magenta'))
+            print(f'ERROR: Invalid Permissions to read: {Path(os.getcwd())}')
             SelectionPrompt()
 
         # Coloring
-        coloredZero = (colored('0', 'magenta'))
 
         #Prints
-        print(colored(f'[{coloredZero}]  >>  Go Back'))
+        print(f'[0]  >>  Go Back')
         for i in itemslist:
-            cItemnum = (colored(itemnum, 'cyan'))
-            cZero = (colored('0', 'cyan') + cItemnum)
+            Zero = ('0') + str(itemnum)
             if itemnum < 10:
-                print(colored(f'[{cZero}]  >>  {i}'))
+                print(f'[{Zero}]  >>  {i}')
             else:
-                print(colored(f'[{cItemnum}]  >>  {i}'))
+                print(f'[{itemnum}]  >>  {i}')
             itemnum = itemnum + 1
 
         # Prompt
@@ -175,22 +163,19 @@ def main():
                             Path.chdir(currentPath)
                             SelectionPrompt()
                         except PermissionError:
-                            print(colored(f'ERROR: Invalid Permissions to read:', 'red'), colored(f'{Path(joinedPath)}', 'magenta'))
+                            print(f'ERROR: Invalid Permissions to read: {Path(joinedPath)}')
                             SelectionPrompt()
                     elif Path.isfile(joinedPath) == True:
                         cls()
                         fileinfo(selection, itemslist)
             except IndexError:
-                print(colored(f'ERROR: Must be between', 'red'), colored('0', 'magenta'), colored('and', 'red'), colored(f'{len(itemslist)}', 'magenta'))
+                print(f'ERROR: Must be between 0 and {len(itemslist)}')
 
     def changeDirPrompt(): # Custom Directory Prompt
 
-        #Coloring
-        coloredZero = (colored('0', 'magenta'))
-
         # Prints
-        print(colored(f'[{coloredZero}] Go Back'))
-        print(colored(f'Example Path:', 'cyan'), colored('C:\\Users\\dirxp\\AppData\\Local\\Python', 'magenta'))
+        print(f'[0] Go Back')
+        print(f'Example Path: C:\\Users\\dirxp\\AppData\\Local\\Python')
 
         # Change Directory Function Call
         changeDir()
@@ -208,7 +193,7 @@ def main():
             cls()
             SelectionPrompt()
         else:
-            print(colored(f'ERROR: Invalid Path:', 'red'), colored(f'{text2}', 'magenta'))
+            print(f'ERROR: Invalid Path: {text2}')
             changeDir()
 
     def fileinfo(selection, list): # File Information Screen
@@ -233,23 +218,17 @@ def main():
         else:
             itemsize = str(f'{itemsizekb} KB')
 
-        # Coloring
-        colored0 = (colored('0', 'magenta'))
-        colored1 = (colored('1', 'magenta'))
-        colored2 = (colored('2', 'magenta'))
-        colored3 = (colored('3', 'magenta'))
-
         #Prints
-        print(colored(f'          File Info for:', 'cyan'), colored(f'{itemname}', 'magenta'))
+        print(f'          File Info for: {itemname}')
         print('----------------------------------------')
-        print(colored(f'Name         |       '), colored(f'{itemstem}'))
-        print(colored(f'Extension    |       '), colored(f'{itemext}'))
-        print(colored(f'Size         |       '), colored(f'{itemsize}'))
-        print(colored(f'Created      |       '), colored(f'{itemct}'))
-        print(colored(f'Modified     |       '), colored(f'{itemmod}'))
+        print(f'Name         |        {itemstem}')
+        print(f'Extension    |        {itemext}')
+        print(f'Size         |        {itemsize}')
+        print(f'Created      |        {itemct}')
+        print(f'Modified     |        {itemmod}')
         print('----------------------------------------')
-        print(colored(f'[{colored0}]  >>  Go Back'))
-        print(colored(f'[{colored1}]  >>  Open File'))
+        print(f'[0]  >>  Go Back')
+        print(f'[1]  >>  Open File')
 
         # Zip Check/Print
         formatstable = [
@@ -261,7 +240,7 @@ def main():
             ".wim"
         ]
         if itemext in formatstable:
-            print(colored(f'[{colored2}]  >>  Un-Zip File'))
+            print(f'[2]  >>  Un-Zip File')
             itemiszip = True
         else:
             itemiszip = False
@@ -288,14 +267,14 @@ def main():
             ".log"
         ]
         if itemext in formatstable:
-            print(colored(f'[{colored2}]  >>  Edit Text File'))
+            print(f'[2]  >>  Edit Text File')
             itemistxt = True
         else:
             itemistxt = False
 
         # Python Check
         if itemext == ".py":
-            print(colored(f'[{colored3}]  >>  Run File Here'))
+            print(f'[3]  >>  Run File Here')
             itemispy = True
         else:
             itemispy = False
@@ -318,13 +297,13 @@ def main():
                 runpy(selection, list)
                 print()
             else:
-                print(colored(f'ERROR: Unknown Index:', 'red'), colored(f'{text}', 'magenta'))
+                print(f'ERROR: Unknown Index: {text}')
 
     def unzip(path, selection, list):
         with zipfile.ZipFile(path, 'r') as zip_ref:
             zip_ref.extractall(path.parent)
         cls()
-        print(colored("Done!", 'yellow'))
+        print("Done!")
         fileinfo(selection, list)
     
     def editTxT(selection, list):
@@ -497,15 +476,13 @@ def main():
 
         exec(open(itemname).read())
 
-        print(colored(f'Script {itemname} has ended,', 'cyan'))
+        print(f'Script {itemname} has ended,')
         pause()
         cls()
         fileinfo(selection, list)
 
     def console(path):
-        coloredExit = colored('exit', 'magenta')
-
-        print(f"DirXPlore [Version 1.3.3]\n(R) M4X4. All rights reserved.\n\nType {coloredExit} to exit\n")
+        print(f"DirXPlore [Version 1.3.3]\n(R) M4X4. All rights reserved.\n\nType 'exit' to exit\n")
         
         while True:
             try:
@@ -517,7 +494,7 @@ def main():
                 else:
                     exec(script)
             except Exception as e:
-                print(colored(f"\n{e}\n", 'red'))
+                print(f"\n{e}\n")
 
     ###############
     ##   Start   ##
