@@ -1,5 +1,5 @@
-DirXPlore
-%%%%%%%%%
+DirXPlore Python
+%%%%%%%%%%%%%%%%
 
 Python Directory and File managment at your keystrokes.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
