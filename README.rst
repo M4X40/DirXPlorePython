@@ -13,4 +13,4 @@ Python Directory and File managment at your keystrokes.
 
 NEWS
 ^^^^
-`Shhh! <https://github.com/M4X40/DirXPlore>`_
+Rewrite happening soon ooooo
